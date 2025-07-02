@@ -47,23 +47,82 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Upload File to S3</h2>
-      <form onSubmit={handleUpload}>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <button type="submit">Upload</button>
+    <div style={{ maxWidth: '600px', margin: '3rem auto', fontFamily: 'Arial, sans-serif' }}>
+      <h2 style={{ textAlign: 'center', color: '#333' }}>📁 Upload File to S3</h2>
+      
+      <form 
+        onSubmit={handleUpload}
+        style={{
+          border: '1px solid #ddd',
+          padding: '1.5rem',
+          borderRadius: '8px',
+          backgroundColor: '#f9f9f9',
+          marginBottom: '2rem'
+        }}
+      >
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          style={{
+            display: 'block',
+            marginBottom: '1rem'
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Upload
+        </button>
       </form>
-      <h3>Uploaded Files</h3>
-      <ul>
-        {files.map((f) => (
-          <li key={f._id}>
-            {f.originalName} ({f.key})
-            <button onClick={() => handleDelete(f._id)} style={{ marginLeft: '1rem' }}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+
+      <h3 style={{ marginBottom: '1rem' }}>🗂 Uploaded Files</h3>
+      {files.length === 0 ? (
+        <p style={{ color: '#888' }}>No files uploaded yet.</p>
+      ) : (
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {files.map((f) => (
+            <li
+              key={f._id}
+              style={{
+                padding: '0.75rem 1rem',
+                marginBottom: '0.5rem',
+                backgroundColor: '#fff',
+                border: '1px solid #ddd',
+                borderRadius: '6px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <div>
+                <strong>{f.originalName}</strong><br />
+                <small style={{ color: '#666' }}>{f.key}</small>
+              </div>
+              <button
+                onClick={() => handleDelete(f._id)}
+                style={{
+                  backgroundColor: '#f44336',
+                  color: 'white',
+                  border: 'none',
+                  padding: '6px 12px',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
